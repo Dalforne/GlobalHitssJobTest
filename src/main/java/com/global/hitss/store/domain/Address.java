@@ -9,7 +9,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
 public class Address implements Serializable {
@@ -26,9 +26,9 @@ public class Address implements Serializable {
 	private String dsComplement;
 	private String cdZipCode;
 	
-	@JsonBackReference
+	@JsonIgnore
 	@ManyToOne
-	@JoinColumn(name="idClient")
+	@JoinColumn(name="id_client")
 	private Client client;
 	
 	public Address() {}

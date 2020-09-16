@@ -14,7 +14,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 
-import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.global.hitss.store.domain.enums.ClientType;
 
 @Entity
@@ -30,7 +30,6 @@ public class Client implements Serializable {
 	private String dsLicense;
 	private Integer nrType; 
 	
-	@JsonManagedReference
 	@OneToMany(mappedBy="client")
 	private List<Address> adresses = new ArrayList<>();
 	
@@ -38,6 +37,10 @@ public class Client implements Serializable {
 	@CollectionTable(name="PHONE")
 	private Set<String> phones = new HashSet<>();
 
+	@JsonIgnore
+	@OneToMany(mappedBy="client")
+	private List<Sale> sales = new ArrayList<>();
+	
 	public Client() {}
 
 	public Client(Integer idClient, String dsClient, String dsEmail, String dsLicense, ClientType nrType) {
@@ -105,6 +108,15 @@ public class Client implements Serializable {
 		this.phones = phones;
 	}
 
+	public List<Sale> getSales() {
+		return sales;
+	}
+
+	public void setSales(List<Sale> sales) {
+		this.sales = sales;
+	}
+	
+	
 	@Override
 	public int hashCode() {
 		final int prime = 31;
@@ -129,7 +141,8 @@ public class Client implements Serializable {
 			return false;
 		return true;
 	}
-	
+
+
 	
 	
 	

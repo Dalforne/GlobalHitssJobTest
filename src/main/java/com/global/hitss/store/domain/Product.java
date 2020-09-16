@@ -2,7 +2,9 @@ package com.global.hitss.store.domain;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -11,9 +13,9 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
+import javax.persistence.OneToMany;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
 public class Product implements Serializable {
@@ -28,13 +30,17 @@ public class Product implements Serializable {
 	private Double vlPrice;
 	private Integer nrStock;
 	
-	@JsonBackReference
+	@JsonIgnore
 	@ManyToMany
 	@JoinTable(name="PRODUCT_TYPE_REFERENCE",
 			   joinColumns = @JoinColumn(name="id_product"),
 			   inverseJoinColumns = @JoinColumn(name="id_product_type")
 	)
 	private List<ProductType> productTypes = new ArrayList<>();
+	
+	@JsonIgnore
+	@OneToMany(mappedBy="id.product")
+	private Set<SaleItem> itens = new HashSet<>();
 	
 	public Product() {}
 
@@ -46,6 +52,15 @@ public class Product implements Serializable {
 		this.nrStock = nrStock;
 	}
 
+	@JsonIgnore
+	public List<Sale> getSales(){
+		List<Sale> list = new ArrayList<>();
+		for (SaleItem i : itens) {
+			 list.add(i.getSale());
+		}
+		return list;
+	}
+	
 	public Integer getIdProduct() {
 		return idProduct;
 	}
@@ -86,6 +101,14 @@ public class Product implements Serializable {
 		this.nrStock = nrStock;
 	}
 
+	public Set<SaleItem> getItens() {
+		return itens;
+	}
+
+	public void setItens(Set<SaleItem> itens) {
+		this.itens = itens;
+	}
+	
 	@Override
 	public int hashCode() {
 		final int prime = 31;
@@ -110,5 +133,7 @@ public class Product implements Serializable {
 			return false;
 		return true;
 	}
+
+
 	
 }

@@ -19,5 +19,10 @@ public class ProductTypeService {
 		Optional<ProductType> obj = repo.findById(id);
 		return obj.orElseThrow(() -> new ObjectNotFoundException("Objeto não encontrado! Id: "+ id +", Tipo: " + ProductType.class.getName()));		
 	}
+	
+	public ProductType insert(ProductType obj) {
+		obj.setIdProductType(null);
+		return repo.save(obj);
+	}
 
 }

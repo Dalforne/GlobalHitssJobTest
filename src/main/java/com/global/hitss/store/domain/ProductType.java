@@ -10,8 +10,6 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToMany;
 
-import com.fasterxml.jackson.annotation.JsonManagedReference;
-
 //@NoArgsConstructor
 //@AllArgsContructor
 
@@ -26,7 +24,6 @@ public class ProductType implements Serializable  {
 	private Integer idProductType;
 	private String dsProductType;
 	
-	@JsonManagedReference
 	@ManyToMany(mappedBy="productTypes")
 	private List<Product> products = new ArrayList<>();
 	
