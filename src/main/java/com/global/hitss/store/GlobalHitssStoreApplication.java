@@ -61,6 +61,11 @@ public class GlobalHitssStoreApplication implements CommandLineRunner {
 		
 		ProductType pt1 = new ProductType(null,"Informática");
 		ProductType pt2 = new ProductType(null,"Jardim");
+		ProductType pt3 = new ProductType(null,"Ferramentas");
+		ProductType pt4 = new ProductType(null,"Eletrônicos");
+		ProductType pt5 = new ProductType(null,"Cama mesa e banho");
+		ProductType pt6 = new ProductType(null,"Flamengo");
+		ProductType pt7 = new ProductType(null,"Disco de Vinil");
 		
 		
 		Product p1 = new Product(null, "PenDrive 128GB", 100.00, 10);
@@ -74,7 +79,7 @@ public class GlobalHitssStoreApplication implements CommandLineRunner {
 		p2.getProductTypes().addAll(Arrays.asList(pt1, pt2));
 		p3.getProductTypes().addAll(Arrays.asList(pt1));
 		
-		productTypeRepository.saveAll(Arrays.asList(pt1, pt2));		
+		productTypeRepository.saveAll(Arrays.asList(pt1, pt2, pt3, pt4, pt5, pt6, pt7));
 		productRepository.saveAll(Arrays.asList(p1, p2, p3));	
 		
 		Client cli1 = new Client(null, "Renato Dalforne", "renato.dalforne@gmail.com", "09165490703", ClientType.PESSOAFISICA);

@@ -8,5 +8,5 @@ Use as Informações abaixo para acessar o banco de dados:
 
 ### 
 
-Aplicativo rodando em SpringBoot com Java 11, geração automática de banco de dados. 
+Aplicativo rodando em SpringBoot 2.3.3 com Java 11, geração automática de banco de dados. 
 

@@ -6,7 +6,9 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+import javax.persistence.CascadeType;
 import javax.persistence.CollectionTable;
+import javax.persistence.Column;
 import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -26,11 +28,13 @@ public class Client implements Serializable {
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private Integer idClient;
 	private String dsClient;
+	
+	@Column(unique=true)
 	private String dsEmail;
 	private String dsLicense;
 	private Integer nrType; 
 	
-	@OneToMany(mappedBy="client")
+	@OneToMany(mappedBy="client", cascade=CascadeType.ALL)
 	private List<Address> adresses = new ArrayList<>();
 	
 	@ElementCollection
@@ -49,7 +53,7 @@ public class Client implements Serializable {
 		this.dsClient = dsClient;
 		this.dsEmail = dsEmail;
 		this.dsLicense = dsLicense;
-		this.nrType = nrType.getCod();
+		this.nrType = (nrType==null) ? null : nrType.getCod();
 	}
 
 	public Integer getIdClient() {

@@ -8,4 +8,6 @@ import com.global.hitss.store.domain.Client;
 @Repository
 public interface ClientRepository extends JpaRepository<Client, Integer> {
 
+//	@Transactional(readOnly=true)
+	Client findByDsEmail(String dsEmail);
 }
