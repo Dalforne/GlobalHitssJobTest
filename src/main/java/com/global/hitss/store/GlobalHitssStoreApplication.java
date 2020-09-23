@@ -65,22 +65,42 @@ public class GlobalHitssStoreApplication implements CommandLineRunner {
 		ProductType pt4 = new ProductType(null,"Eletrônicos");
 		ProductType pt5 = new ProductType(null,"Cama mesa e banho");
 		ProductType pt6 = new ProductType(null,"Flamengo");
-		ProductType pt7 = new ProductType(null,"Disco de Vinil");
+		ProductType pt7 = new ProductType(null,"Jogos");		
 		
+		Product p1 = new Product(null, "PenDrive 128GB", 100.00, 10, 0);
+		Product p2 = new Product(null, "Impressora Epson", 900.00, 3, 0);
+		Product p3 = new Product(null, "Teclado Microsoft", 80.00, 3, 0);
+		Product p4 = new Product(null, "Mouse Microsoft", 50.00, 30, 0);
+		Product p5 = new Product(null, "Mesa de escritório", 180.00, 3, 0);
+		Product p6 = new Product(null, "Toalha", 60.00, 3, 0);
+		Product p7 = new Product(null, "Colcha", 160.00, 20, 0);
+		Product p8 = new Product(null, "TV true color", 12000.00, 3, 0);
+		Product p9 = new Product(null, "Roçadeira", 800.00, 3, 0);
+		Product p10 = new Product(null, "Jogo de Xbox One", 160.00, 3, 0);
+		Product p11 = new Product(null, "Camisa do Flamengo", 239.90, 1, 0);
 		
-		Product p1 = new Product(null, "PenDrive 128GB", 100.00, 10);
-		Product p2 = new Product(null, "Impressora Epson", 900.00, 3);
-		Product p3 = new Product(null, "Teclado Microsoft", 80.00, 3);
-		
-		pt1.getProducts().addAll(Arrays.asList(p1, p2, p3));
-		pt2.getProducts().addAll(Arrays.asList(p2));
+		pt1.getProducts().addAll(Arrays.asList(p1, p2, p3, p4));
+		pt2.getProducts().addAll(Arrays.asList(p9));
+		pt3.getProducts().addAll(Arrays.asList(p9));
+		pt4.getProducts().addAll(Arrays.asList(p8));
+		pt5.getProducts().addAll(Arrays.asList(p5, p6, p7));
+		pt6.getProducts().addAll(Arrays.asList(p11));
+		pt7.getProducts().addAll(Arrays.asList(p10));
 		
 		p1.getProductTypes().addAll(Arrays.asList(pt1));
-		p2.getProductTypes().addAll(Arrays.asList(pt1, pt2));
+		p2.getProductTypes().addAll(Arrays.asList(pt1));
 		p3.getProductTypes().addAll(Arrays.asList(pt1));
+		p4.getProductTypes().addAll(Arrays.asList(pt1));
+		p5.getProductTypes().addAll(Arrays.asList(pt5));
+		p6.getProductTypes().addAll(Arrays.asList(pt5));
+		p7.getProductTypes().addAll(Arrays.asList(pt5));
+		p8.getProductTypes().addAll(Arrays.asList(pt4));
+		p9.getProductTypes().addAll(Arrays.asList(pt2, pt3));
+		p10.getProductTypes().addAll(Arrays.asList(pt7));
+		p11.getProductTypes().addAll(Arrays.asList(pt6));
 		
 		productTypeRepository.saveAll(Arrays.asList(pt1, pt2, pt3, pt4, pt5, pt6, pt7));
-		productRepository.saveAll(Arrays.asList(p1, p2, p3));	
+		productRepository.saveAll(Arrays.asList(p1, p2, p3, p4, p5, p6, p7, p8, p9, p10, p11));	
 		
 		Client cli1 = new Client(null, "Renato Dalforne", "renato.dalforne@gmail.com", "09165490703", ClientType.PESSOAFISICA);
 		

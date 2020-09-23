@@ -54,6 +54,14 @@ public class Sale implements Serializable {
 		this.deliveryAddress = deliveryAddress;
 		this.nrAmount = nrAmount;
 	}
+	
+	public double getTotalAmount () {
+		double sum = 0.0;
+		for (SaleItem si: itens) {
+			sum = sum + si.getSubTotal();
+		}
+		return sum;
+	}
 
 	public Integer getIdSale() {
 		return idSale;

@@ -15,6 +15,8 @@ import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 
+import org.springframework.data.annotation.Version;
+
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
@@ -30,6 +32,10 @@ public class Product implements Serializable {
 	private Double vlPrice;
 	private Integer nrStock;
 	
+	@Version
+	private Integer version;
+	
+	
 	@JsonIgnore
 	@ManyToMany
 	@JoinTable(name="PRODUCT_TYPE_REFERENCE",
@@ -44,12 +50,13 @@ public class Product implements Serializable {
 	
 	public Product() {}
 
-	public Product(Integer idProduct, String dsProduct, Double vlPrice, Integer nrStock) {
+	public Product(Integer idProduct, String dsProduct, Double vlPrice, Integer nrStock, Integer version) {
 		super();
 		this.idProduct = idProduct;
 		this.dsProduct = dsProduct;
 		this.vlPrice = vlPrice;
 		this.nrStock = nrStock;
+		this.version = version;
 	}
 
 	@JsonIgnore
@@ -109,6 +116,14 @@ public class Product implements Serializable {
 		this.itens = itens;
 	}
 	
+	public Integer getVersion() {
+		return version;
+	}
+
+	public void setVersion(Integer version) {
+		this.version = version;
+	}
+
 	@Override
 	public int hashCode() {
 		final int prime = 31;

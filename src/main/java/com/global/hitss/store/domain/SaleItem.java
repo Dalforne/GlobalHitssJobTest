@@ -31,14 +31,25 @@ public class SaleItem implements Serializable {
 		this.vlPrice = vlPrice;
 	}
 	
+	public double getSubTotal() {
+		return (vlPrice - vlDiscount) * nrAmount;		
+	}
+	
 	@JsonIgnore
 	public Sale getSale() {
 		return id.getSale();
 	}
-
 	
 	public Product getProduct() {
 		return id.getProduct();
+	}
+	
+	public void setSale(Sale sale) {
+		id.setSale(sale);		
+	}
+	
+	public void setProduct(Product product) {
+		id.setProduct(product);
 	}
 	
 	public SaleItemPK getId() {
