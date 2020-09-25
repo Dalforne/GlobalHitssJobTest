@@ -25,20 +25,34 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 	private Environment env;
 
 	private static final String[] PUBLIC_MATCHERS = {
-			"/h2-console/**"
-	};
-	
-	private static final String[] PUBLIC_MATCHERS_GET = {
+			"/h2-console/**",
+			"/sales/**",
 			"/products/**",
 			"/productTypes/**"
 	};
+	
+	private static final String[] PUBLIC_MATCHERS_GET = {
+			"/h2-console/**",
+			"/products/**",
+			"/addresses/**",
+			"/clients/**",
+			"/productTypes/**"
+	};
+	
+	@Override
+	public void configure(WebSecurity web) throws Exception {
+		 web.ignoring().antMatchers("/v2/api-docs", "/configuration/ui", "/swagger-resources/**", "/configuration/**",
+		"/swagger-ui.html", "/webjars/**");
+	}
+			
 
 	@Override
 	public void configure(HttpSecurity http) throws Exception {
 		
-		if(Arrays.asList(env.getActiveProfiles()).contains("test")) {
-			http.headers().frameOptions().disable();
-		}
+//		if(Arrays.asList(env.getActiveProfiles()).contains("test")) {
+//			http.headers().frameOptions().disable();
+//		}
+		http.headers().frameOptions().disable();
 		http.cors().and().csrf().disable();
 		http.authorizeRequests()
 			.antMatchers(HttpMethod.GET, PUBLIC_MATCHERS_GET).permitAll()
@@ -48,11 +62,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 		http.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
 	}
 	
-	@Override
-	public void configure(WebSecurity web) throws Exception {
-	 web.ignoring().antMatchers("/v2/api-docs", "/configuration/ui", "/swagger-resources/**", "/configuration/**",
-	"/swagger-ui.html", "/webjars/**");
-	}
+
 	
 	@Bean
 	CorsConfigurationSource corsConfigutationSource() {

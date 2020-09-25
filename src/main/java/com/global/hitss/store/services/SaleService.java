@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.global.hitss.store.domain.PaymentBill;
+import com.global.hitss.store.domain.Product;
 import com.global.hitss.store.domain.Sale;
 import com.global.hitss.store.domain.SaleItem;
 import com.global.hitss.store.domain.enums.StatePayment;
@@ -15,6 +16,7 @@ import com.global.hitss.store.repositories.PaymentRepository;
 import com.global.hitss.store.repositories.ProductRepository;
 import com.global.hitss.store.repositories.SaleItemRepository;
 import com.global.hitss.store.repositories.SaleRepository;
+import com.global.hitss.store.services.exceptions.DataIntegrityException;
 import com.global.hitss.store.services.exceptions.ObjectNotFoundException;
 
 @Service
@@ -49,24 +51,29 @@ public class SaleService {
 	@Transactional
 	public Sale insert(Sale obj) {
 		obj.setIdSale(null);
-		obj.setTmSale(new Date());
+		obj.setDtSale(new Date());
 		obj.setClient(clientService.find(obj.getClient().getIdClient()));
 		obj.getPayment().setStatePayment(StatePayment.PENDENTE);
 		obj.getPayment().setSale(obj);
 		if(obj.getPayment() instanceof PaymentBill) {
 			PaymentBill pay = (PaymentBill) obj.getPayment();
-			billService.setPaymentBill(pay, obj.getTmSale());
+			billService.setPaymentBill(pay, obj.getDtSale());
 		}
 		obj = repo.save(obj);
 		paymentRepository.save(obj.getPayment());
 		
-		//TODO
-		//		@Lock(LockModeType.OPTIMISTIC_FORCE_INCREMENT)
-		//		productRepository.update (Product,  nrAmout)
-		
+		Product product;
 		for(SaleItem si : obj.getItens()) {
+			product = productService.find(si.getProduct().getIdProduct());
+			if(product.getNrStock()<si.getNrAmount()) {
+				throw new DataIntegrityException("Produto Esgotado!");
+			}
+			else {
+				product.setNrStock(product.getNrStock()-si.getNrAmount());
+				productService.save(product);
+			}
 			si.setVlDiscount(0.0);
-			si.setProduct(productService.find(si.getProduct().getIdProduct()));
+			si.setProduct(product);
 			si.setVlPrice(si.getProduct().getVlPrice());			
 			si.setVlPrice(productRepository.findById(si.getProduct().getIdProduct()).get().getVlPrice());
 			si.setSale(obj);

@@ -7,6 +7,7 @@ import javax.persistence.LockModeType;
 import javax.persistence.QueryHint;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort.Direction;
@@ -18,6 +19,7 @@ import com.global.hitss.store.domain.Product;
 import com.global.hitss.store.domain.ProductType;
 import com.global.hitss.store.repositories.ProductRepository;
 import com.global.hitss.store.repositories.ProductTypeRepository;
+import com.global.hitss.store.services.exceptions.DataIntegrityException;
 import com.global.hitss.store.services.exceptions.ObjectNotFoundException;
 
 @Service
@@ -35,6 +37,20 @@ public class ProductService {
 		Optional<Product> obj = repo.findById(id);
 		return obj.orElseThrow(() -> new ObjectNotFoundException("Objeto não encontrado! Id: "+ id +", Tipo: " + Product.class.getName()));		
 	}
+	
+	
+	@Lock(LockModeType.OPTIMISTIC_FORCE_INCREMENT)
+	@QueryHints({@QueryHint(name = "javax.persistence.lock.timeout", value = "3000")})
+	public Product save(Product product) {
+		try {
+			repo.save(product);
+		}
+		catch(DataIntegrityViolationException e) {
+			throw new DataIntegrityException("Produto foi alterado, favor tentar novamente.");
+		}
+		return product;		
+	}
+	
 	
 	public Page<Product> search(String dsProduct, List<Integer> ids, Integer page, Integer linesPerPager, String orderBy, String derection){
 		PageRequest pageRequest = PageRequest.of(page, linesPerPager, Direction.valueOf(derection) , orderBy);

@@ -15,33 +15,33 @@ public class PaymentBill extends Payment {
 	private static final long serialVersionUID = 1L;
 
 	@JsonFormat(pattern="dd/MM/yyyy")
-	private Date tmDueDate;
+	private Date dtDueDate;
 	
 	@JsonFormat(pattern="dd/MM/yyyy")
-	private Date tmPayDay;
+	private Date dtPayDay;
 	
 	public PaymentBill() {}
 
-	public PaymentBill(Integer idPayment, StatePayment statePayment, Sale sale, Date tmDueDate, Date tmPayDay) {
+	public PaymentBill(Integer idPayment, StatePayment statePayment, Sale sale, Date dtDueDate, Date dtPayDay) {
 		super(idPayment, statePayment, sale);
-		this.tmDueDate = tmDueDate;
-		this.tmPayDay = tmPayDay;
+		this.dtDueDate = dtDueDate;
+		this.dtPayDay = dtPayDay;
 	}
 
-	public Date getTmDueDate() {
-		return tmDueDate;
+	public Date getDtDueDate() {
+		return dtDueDate;
 	}
 
-	public void setTmDueDate(Date tmDueDate) {
-		this.tmDueDate = tmDueDate;
+	public void setDtDueDate(Date dtDueDate) {
+		this.dtDueDate = dtDueDate;
 	}
 
 	public Date getTmPayDay() {
-		return tmPayDay;
+		return dtPayDay;
 	}
 
-	public void setTmPayDay(Date tmPayDay) {
-		this.tmPayDay = tmPayDay;
+	public void setDtPayDay(Date dtPayDay) {
+		this.dtPayDay = dtPayDay;
 	}
 
 

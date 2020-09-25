@@ -21,6 +21,10 @@ import com.global.hitss.store.domain.ProductType;
 import com.global.hitss.store.dto.ProductTypeDTO;
 import com.global.hitss.store.services.ProductTypeService;
 
+import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiResponse;
+import io.swagger.annotations.ApiResponses;
+
 @RestController
 @RequestMapping(value="/productTypes")
 public class ProductTypeResource {
@@ -28,12 +32,14 @@ public class ProductTypeResource {
 	@Autowired
 	private ProductTypeService service;
 
+	@ApiOperation(value="Busca por id")
 	@RequestMapping(value="/{id}", method=RequestMethod.GET)
 	public ResponseEntity<ProductType> find(@PathVariable Integer id) {
 		ProductType obj = service.find(id);
 		return ResponseEntity.ok().body(obj);
 	}
 	
+	@ApiOperation(value="Insere Categoria")
 	@RequestMapping(method=RequestMethod.POST)
 	public ResponseEntity<Void> insert(@Valid @RequestBody ProductTypeDTO objDto){
 		ProductType obj = service.fromDTO(objDto);
@@ -43,6 +49,7 @@ public class ProductTypeResource {
 		return ResponseEntity.created(uri).build();
 	}
 	
+	@ApiOperation(value="Atualiza Categoria")
 	@RequestMapping(value="/{id}", method=RequestMethod.PUT)
 	public ResponseEntity<Void> update(@Valid @RequestBody ProductTypeDTO objDto, @PathVariable Integer id){
 		ProductType obj = service.fromDTO(objDto);
@@ -51,12 +58,18 @@ public class ProductTypeResource {
 		return ResponseEntity.noContent().build();
 	}
 	
+	@ApiOperation(value="Remove Categoria")
+	@ApiResponses(value = {
+			@ApiResponse(code = 400, message = "Não é possível excluir uma categoria que possui produtos"),
+			@ApiResponse(code = 404, message = "Código inexistente") 
+			})
 	@RequestMapping(value="/{id}", method=RequestMethod.DELETE)
 	public ResponseEntity<Void> delete(@PathVariable Integer id){
 		service.delete(id);
 		return ResponseEntity.noContent().build();
 	}
 	
+	@ApiOperation(value="Retorna todas Categoria")
 	@RequestMapping(method=RequestMethod.GET)
 	public ResponseEntity<List<ProductTypeDTO>> findAll() {
 		List<ProductType> list  = service.findAll();
@@ -64,6 +77,7 @@ public class ProductTypeResource {
 		return ResponseEntity.ok().body(listDto);
 	}
 
+	@ApiOperation(value="Retorna todas Categoria com paginação")
 	@RequestMapping(value="/page", method=RequestMethod.GET)
 	public ResponseEntity<Page<ProductTypeDTO>> findPage(
 			@RequestParam(value="page", defaultValue="0") Integer page, 

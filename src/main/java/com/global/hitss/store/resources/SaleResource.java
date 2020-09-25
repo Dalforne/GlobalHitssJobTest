@@ -29,7 +29,6 @@ public class SaleResource {
 		return ResponseEntity.ok().body(obj);
 	}
 
-	
 	@RequestMapping(method=RequestMethod.POST)
 	public ResponseEntity<Void> insert(@Valid @RequestBody Sale obj){
 		obj = service.insert(obj);

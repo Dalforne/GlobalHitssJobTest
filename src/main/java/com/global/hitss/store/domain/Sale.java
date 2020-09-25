@@ -27,7 +27,7 @@ public class Sale implements Serializable {
 	private Integer idSale;
 	
 	@JsonFormat(pattern="dd/MM/yyyy HH:mm")
-	private Date tmSale;
+	private Date dtSale;
 	private Integer nrAmount;
 	
 	@OneToOne(cascade=CascadeType.ALL, mappedBy="sale")
@@ -46,10 +46,10 @@ public class Sale implements Serializable {
 	
 	public Sale() {}
 
-	public Sale(Integer idSale, Date tmSale, Client client, Address deliveryAddress, Integer nrAmount) {
+	public Sale(Integer idSale, Date dtSale, Client client, Address deliveryAddress, Integer nrAmount) {
 		super();
 		this.idSale = idSale;
-		this.tmSale = tmSale;
+		this.dtSale = dtSale;
 		this.client = client;
 		this.deliveryAddress = deliveryAddress;
 		this.nrAmount = nrAmount;
@@ -71,12 +71,12 @@ public class Sale implements Serializable {
 		this.idSale = idSale;
 	}
 
-	public Date getTmSale() {
-		return tmSale;
+	public Date getDtSale() {
+		return dtSale;
 	}
 
-	public void setTmSale(Date tmSale) {
-		this.tmSale = tmSale;
+	public void setDtSale(Date dtSale) {
+		this.dtSale = dtSale;
 	}
 
 	public Payment getPayment() {

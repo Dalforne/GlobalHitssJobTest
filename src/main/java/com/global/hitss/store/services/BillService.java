@@ -14,6 +14,6 @@ public class BillService {
 		Calendar cal = Calendar.getInstance();
 		cal.setTime(tmSale);
 		cal.add(Calendar.DAY_OF_MONTH, 7);
-		pay.setTmDueDate(cal.getTime());
+		pay.setDtDueDate(cal.getTime());
 	}
 }
